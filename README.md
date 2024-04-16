@@ -1,1 +1,2 @@
-# Mathematical-Approach-to-Artificial-Neural-Networks
+# Mathematical Approach to Artificial Neural Networks
+
