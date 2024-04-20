@@ -9,7 +9,7 @@ The inputs will be denoted by the variable $x^t$, where $x^t = \begin{bmatrix}x_
 
 The weights will be responsible for modulating the $n$-inputs $x$. Thus, concerning the first layer, where the inputs will always be the vector $x$, we will always have $w^t = \begin{bmatrix} w_1 & w_2 & \dots & w_n \end{bmatrix}$, where each $w_i \in \mathbb{R}$, and for the vector $w$, we have $w \in \mathbb{R}^{n \times 1}$ with the quantity of $n$-inputs of $x$ equal to the $n$-weights of $w$. The weight $w_0$ will be reserved to represent the bias also. 
 
-### Transfer Function$z(x)$
+### Transfer Function $z(x)$
 
 Thus, $z(x)$ is responsible for relating the $n$-inputs with their respective $n$-weights to generate $z$, serving as the transfer function. As we are currently defining a layer, this being the first one, $z: \mathbb{R}^{n \times 1} \rightarrow \mathbb{R}$. To define the function $z(x)$, we can do so in two ways:
 
@@ -26,7 +26,7 @@ In the graphical representation below, we illustrate the processing of the $n$-i
 
 <img src="/img/transfer_function.svg" alt="The perceptron"/>
 
-### Activation Function$\varphi(z)$
+### Activation Function $\varphi(z)$
 The activation function is responsible for introducing nonlinearity into the system. Therefore, it always receives the value of $z$. The activation function can be defined in various forms such as sigmoid, hyperbolic tangent, rectified linear unit, etc. In this topic, we will not focus on the behavior of each function yet but rather on how the system is structured with it. Thus, for only one layer of neurons with a single neuron, we have $\varphi: \mathbb{R} \rightarrow \mathbb{R}$:
 
 ```math
