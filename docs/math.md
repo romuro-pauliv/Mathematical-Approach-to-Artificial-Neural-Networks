@@ -81,7 +81,7 @@ f^1(X_{n \times 1}) = \varphi(W^1_{i \times n}X_{n \times 1}) = Y_{i \times 1}
 ```
 Where $n$ is the quantity of $n$-inputs in the vector $X$, and $i$ is the quantity of neurons in layer 1. Thus, we clearly see that $n \neq i$ is possible, where the output of the layer will always be of size $i$.
 
-### Multilayer Perceptron
+### Multilayer Perceptron (MLP)
 
 Based on the general function from the previous topic, we know that $Z^1 = W^1 \cdot X$, where $X$ refers to the $n$-inputs, $W^1$ represents the weights of each $i$-neuron in the first layer, and $Z^1$ denotes the output vector of the transfer function of the first layer. With this understanding, we can apply $L$ more layers to the system, where the input of layer $L$ is the output vector of layer $L-1$:
 
@@ -107,3 +107,12 @@ F(X) = \varphi(f^L(f^{L-1}(\dots f^1(X)))), \quad \text{for} \quad X^t=\begin{bm
 ```
 
 _Where \( f^1(X) = W^1 \cdot X \) and for the remaining layers \( f^i(Z^{i-1}) = W^i \cdot Z^{i-1} \)_.
+
+Notice that the usability of the activation function may vary. For example, in some problems, we may use the activation function at the output of each layer, while in others, we may not. For regression tasks in ANN, we won't use the activation layer in $f^L(Z^{L-1})$, where as for classification problems, we may utilize the activation function in layer $L$.
+
+Based on this, we have the freedom to create structures depending on the problem at hand. We will explore the application of this further ahead.
+
+### Theoretical Learning Algorithm
+
+Let's consider a cost function $E(W)$, where it represents the error value between the output of the layer and the expected value. The objective of this function is to provide a method that, by modifying the values of $W$, we can reduce the error indicated by the function $E(W)$ until it is the smallest possible value.
+
