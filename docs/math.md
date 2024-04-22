@@ -124,3 +124,29 @@ __Theorem 1__ (Gradient of a function). _Let $E: R^n \rightarrow R$ be a differe
 2. _points in the direction in which the function $E$ most rapidly increases; thus, $-\nabla E$ indicates the direction of fastest decreasing_;
 3. _is orthogonal to the level surfaces (generalization of the concept of a level curve for a function of two variables) of $E$, i.e., those of the form $E(W) = k$ for a constant $k$_
 
+#### Example of $\nabla f$:
+
+To facilitate understanding, let's define the function $f: \mathbb{R}^2 \rightarrow \mathbb{R}$ such that:
+
+```math
+f(x, y) = x^2 + y^2
+```
+
+If we visualize the function graphically, we have:
+
+<div style="text-align:center;">
+    <img src="/img/gradient_example_1.png" alt="f(x, y) = x^2 + y^2"/>
+</div>
+
+Based on the function $f(x, y)$, we can define $-\nabla f(x, y)$ according to Theorem 1, item 2. Thus, we obtain a vector field with the following deduction:
+
+```math
+- \nabla f(x, y) = \begin{bmatrix} -\dfrac{\partial f(x, y)}{\partial x} = -2x \\\\ -\dfrac{\partial f(x, y)}{\partial y} = -2y \end{bmatrix}
+```
+
+To facilitate visualization, we can have a two-dimensional perspective $(x, y)$ of the function $f(x, y)$ where the coloration of the graph below will indicate the value of the $z$-axis. The intention is that the vectors point towards the minimum of the function, where the farther from the minimum, the greater the resultant of the vector, and the closer to the minimum, the smaller the resultant of the vector.
+
+<div style="text-align:center;">
+    <img src="/img/gradient_example_2.png" alt="f(x, y) = x^2 + y^2"/>
+</div>
+
