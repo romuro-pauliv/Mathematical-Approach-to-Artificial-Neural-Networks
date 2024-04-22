@@ -116,3 +116,11 @@ Based on this, we have the freedom to create structures depending on the problem
 
 Let's consider a cost function $E(W)$, where it represents the error value between the output of the layer and the expected value. The objective of this function is to provide a method that, by modifying the values of $W$, we can reduce the error indicated by the function $E(W)$ until it is the smallest possible value.
 
+For this, we can apply the gradient of the function $E(W)$. Let's recall the gradient theorem below:
+
+__Theorem 1__ (Gradient of a function). _Let $E: R^n \rightarrow R$ be a differenciable function in the neighbourhood of some points $W = \begin{bmatrix} w_0 & w_1 & \dots & w_i\end{bmatrix}$ where $i$ represents the number of neurons in this hypothetical layer. Then, the gradient of $E$ at $W$, denote by $\nabla E(W)$,_
+
+1. _represents the slope of the tangent line to the function $E$ at the point $w$_;
+2. _points in the direction in which the function $E$ most rapidly increases; thus, $-\nabla E$ indicates the direction of fastest decreasing_;
+3. _is orthogonal to the level surfaces (generalization of the concept of a level curve for a function of two variables) of $E$, i.e., those of the form $E(W) = k$ for a constant $k$_
+
