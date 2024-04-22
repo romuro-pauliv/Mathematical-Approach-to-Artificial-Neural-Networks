@@ -147,6 +147,31 @@ Based on the function $f(x, y)$, we can define $-\nabla f(x, y)$ according to Th
 To facilitate visualization, we can have a two-dimensional perspective $(x, y)$ of the function $f(x, y)$ where the coloration of the graph below will indicate the value of the $z$-axis. The intention is that the vectors point towards the minimum of the function, where the farther from the minimum, the greater the resultant of the vector, and the closer to the minimum, the smaller the resultant of the vector.
 
 <div style="text-align:center;">
-    <img src="/img/gradient_example_2.svg" alt="f(x, y) = x^2 + y^2"/>
+    <img src="/img/gradient_example_2.svg" alt="-\nabla f(x, y)"/>
 </div>
 
+Having the gradient descent $-\nabla f(x, y)$ at hand, we can define the algorithm responsible for updating the coordinates $x, y$ until they converge to the minimum of the function $f(x, y)$. Therefore, we can correct the values of $x$ and $y$ for $i$ iterations by adjusting the values based on the gradient descent.
+
+In an empirical way, we can deduce that updating the values of $x_{i+1}$ and $y_{i+1}$ based on the gradient of $x_i$ and $y_i$ is given by:
+```math
+\begin{bmatrix} x_{i+1} \\ y_{i+1}\end{bmatrix} = \begin{bmatrix} x_{i} \\ y_{i}\end{bmatrix} - \alpha \begin{bmatrix} 2x_{i} \\ 2y_{i}\end{bmatrix}
+```
+
+The term $\alpha$ will be introduced later in the proof of the gradient descent; for now, let's use it as a multiplier of the gradient, where the higher the $\alpha$, the greater the correction towards the minimum of the function, and the lower the $\alpha$, the smaller the correction towards the minimum of the function. This way, we can understand that:
+
+```math
+f(x_{i+1}, y_{i+1}) \leq f(x_{i}, y_{i}) 
+```
+Iterating $i$ times, we know that the condition $f(x, y) = 0$ will be true.
+
+Below, we will see a simulation where we have coordinates $x, y$ far from the minimum of the function. We know that, based on the vector field, we will have a straight-line trajectory towards the minimum of the function. Because of this, we implement a random variable $\tau \in [-0.1, 0.1]$ to visualize how the gradient will perform. Therefore, the update relation of the coordinates will be:
+
+```math
+\begin{bmatrix} x_{i+1} \\ y_{i+1}\end{bmatrix} = \begin{bmatrix} x_{i} \\ y_{i}\end{bmatrix} - \alpha \begin{bmatrix} 2x_{i} \\ 2y_{i}\end{bmatrix} + \begin{bmatrix} \tau \\  \tau \end{bmatrix}
+```
+Based on the formulation above, we have the following simulation with various values of $\alpha$:
+
+
+<div style="text-align:center;">
+    <img src="/img/gradient_example_3.svg" alt="Gradient Descent Minimum Simulation"/>
+</div>

@@ -35,7 +35,7 @@ def adjust(ini_x: float, ini_y: float, iteration: int, learning_rate: float) -> 
     return np.array(hist_x), np.array(hist_y)
 
 x_t0, y_t0 = adjust(5, 5, 200, 0.01)
-x_t1, y_t1 = adjust(-5, 5, 200, 0.66)
+x_t1, y_t1 = adjust(-5, 5, 3, 0.6)
 x_t2, y_t2 = adjust(-5, -5, 1000, 0.001)
 
 
@@ -44,7 +44,7 @@ x_t2, y_t2 = adjust(-5, -5, 1000, 0.001)
 
 plt.contourf(x, y, z, alpha=0.2)
 plt.quiver(x, y, u, v, M, cmap="inferno")
-# plt.plot(x_t0, y_t0, color="r")
-# plt.plot(x_t1, y_t1, color="y")
-# plt.plot(x_t2, y_t2, color="m")
+plt.plot(x_t0, y_t0, color="r")
+plt.plot(x_t1, y_t1, color="y")
+plt.plot(x_t2, y_t2, color="m")
 plt.show()
