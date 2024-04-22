@@ -135,7 +135,7 @@ f(x, y) = x^2 + y^2
 If we visualize the function graphically, we have:
 
 <div style="text-align:center;">
-    <img src="/img/gradient_example_1.png" alt="f(x, y) = x^2 + y^2"/>
+    <img src="/img/gradient_example_1.svg" alt="f(x, y) = x^2 + y^2"/>
 </div>
 
 Based on the function $f(x, y)$, we can define $-\nabla f(x, y)$ according to Theorem 1, item 2. Thus, we obtain a vector field with the following deduction:
@@ -147,6 +147,6 @@ Based on the function $f(x, y)$, we can define $-\nabla f(x, y)$ according to Th
 To facilitate visualization, we can have a two-dimensional perspective $(x, y)$ of the function $f(x, y)$ where the coloration of the graph below will indicate the value of the $z$-axis. The intention is that the vectors point towards the minimum of the function, where the farther from the minimum, the greater the resultant of the vector, and the closer to the minimum, the smaller the resultant of the vector.
 
 <div style="text-align:center;">
-    <img src="/img/gradient_example_2.png" alt="f(x, y) = x^2 + y^2"/>
+    <img src="/img/gradient_example_2.svg" alt="f(x, y) = x^2 + y^2"/>
 </div>
 
