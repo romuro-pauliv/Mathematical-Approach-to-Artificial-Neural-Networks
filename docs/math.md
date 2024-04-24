@@ -204,3 +204,14 @@ Let's consider the scalar factor $h$ to decrease rapidly, where $h = -\alpha \na
 ```math
 f(x - \alpha \nabla f(x)) \approx f(x) - \alpha \nabla f(x) \nabla f(x) = f(x) - \alpha (\nabla f(x))^2 \leq f(x)
 ```
+The last inequality results from the factor $(\nabla f(x))^2$ being strictly positive. That is, the function $f $ takes smaller values $f(x - \alpha \nabla f(x)) \leq f(x)$ for inputs of the form $x - \alpha \nabla f(x)$ as long as $\alpha$ remains non-negative. Therefore:
+
+```math
+f(\underbrace{x - \alpha \nabla f(x)}_{x_1}) \leq f(\underbrace{\quad x \quad }_{x_0})
+```
+
+As a consequence, the sequence of updates of the minimum values for the function $f(x)$ with initial values $x_0$ is:
+
+```math
+x_{i+1} = x_{i} - \alpha_i \nabla f(x_i)
+```
