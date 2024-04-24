@@ -157,7 +157,7 @@ In an empirical way, we can deduce that updating the values of $x_{i+1}$ and $y_
 \begin{bmatrix} x_{i+1} \\ y_{i+1}\end{bmatrix} = \begin{bmatrix} x_{i} \\ y_{i}\end{bmatrix} - \alpha \begin{bmatrix} 2x_{i} \\ 2y_{i}\end{bmatrix}
 ```
 
-The term $\alpha$ will be introduced later in the proof of the gradient descent; for now, let's use it as a multiplier of the gradient, where the higher the $\alpha$, the greater the correction towards the minimum of the function, and the lower the $\alpha$, the smaller the correction towards the minimum of the function. This way, we can understand that:
+The term $\alpha$ will be introduced later in the proof of this structure; for now, let's use it as a multiplier of the gradient, where the higher the $\alpha$, the greater the correction towards the minimum of the function, and the lower the $\alpha$, the smaller the correction towards the minimum of the function. This way, we can understand that:
 
 ```math
 f(x_{i+1}, y_{i+1}) \leq f(x_{i}, y_{i}) 
@@ -171,7 +171,36 @@ Below, we will see a simulation where we have coordinates $x, y$ far from the mi
 ```
 Based on the formulation above, we have the following simulation with various values of $\alpha$:
 
-
 <div style="text-align:center;">
     <img src="/img/gradient_example_3.svg" alt="Gradient Descent Minimum Simulation"/>
 </div>
+
+Based on the simulation above, we see that when $\alpha$ is small, we take a small step towards the minimum of the function. When $\alpha$ is large, we take a large step towards the minimum of the function. In more complex functions, where there may be local minima, a large step may avoid them, while a small step may trap the algorithm in these minima.
+
+We will address more analytical questions on this subject later. Now, we should focus on the proof of this structure.
+
+#### Proof
+
+Given $x_i \in \mathbb{R}$ and a differentiable function $f: \mathbb{R}^n \rightarrow \mathbb{R}$, we can define the gradient $\nabla f(x_0, x_1, \dots, x_n)$. Let's represent $x_0, x_1, \dots, x_n$ as $x$ in the derivation below:
+
+```math
+\nabla f(x) = \left(\frac{\partial f(x)}{\partial x_0}, \frac{\partial f(x)}{\partial x_1}, \dots, \frac{\partial f(x)}{\partial x_n}\right) = ({f}'(x_0), {f}'(x_1), \dots, {f}'(x_n))
+```
+
+Based on the truth above, we can use the definition of limit:
+
+```math
+\nabla f(x) \approx \left(\lim_{h \rightarrow 0} \frac{f(x_0 + h) - f(x_0)}{h}, \lim_{h \rightarrow 0} \frac{f(x_1 + h) - f(x_1)}{h}, \dots, \lim_{h \rightarrow 0} \frac{f(x_n + h) - f(x_n)}{h}\right)
+```
+
+Forgetting the coordinate description (solving as a single-variable equation), we have:
+
+```math
+\nabla f(x) \approx \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} \Rightarrow f(x + h) \approx f(x) + h\nabla f(x)
+```
+
+Let's consider the scalar factor $h$ to decrease rapidly, where $h = -\alpha \nabla f(x)$ for non-negative and small enough $(h \rightarrow 0)$. Given that $(\nabla f(x))^2 \geq 0$, we can apply the general rule $f(x + h) \approx f(x) + h\nabla f(x)$ to the particular case of $h = -\alpha \nabla f(x)$. Thus, we have:
+
+```math
+f(x - \alpha \nabla f(x)) \approx f(x) - \alpha \nabla f(x) \nabla f(x) = f(x) - \alpha (\nabla f(x))^2 \leq f(x)
+```
