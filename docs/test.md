@@ -26,4 +26,32 @@ w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \nabla \psi_{MSE}(w_{i[r]}^L)
 
 Throughout this topic, we will use the Mean Squared Error (MSE) cost function. This does not imply that only $\psi_{MSE}$ can be used; other types of cost functions can be applied, provided that all the reformulation below is redone.
 
+Given the structure of $\psi_{MSE}$ and the supposed $y_i$, we can define the following:
 
+\[
+\psi_{MSE}(w_{0[r]}^L, \dots, w_{n[r]}^L) = \frac{1}{n}\sum_{i=0}^{n}(\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i)^2
+\]
+
+Then for $\nabla \psi_{MSE}(w_{i[r]}^L)$, we have:
+
+\[
+\nabla \psi_{MSE}(w_{i[r]}^L) = \frac{1}{n}\frac{\partial}{\partial w_{i[r]}^L}(\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i)^2
+\]
+
+In the above definition, we notice that the partial derivative for each term of the sum different from $i$ is $0$, so we only have the term assigned with $i$ to solve. Let's define $u = \sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i$, then we can apply the chain rule:
+
+\[
+\frac{\partial u^2}{\partial w_{i[r]}^L} = \frac{\partial u^2}{\partial u}\frac{\partial u}{\partial \sigma}\frac{\partial \sigma}{\partial w_{i[r]}^L}
+\]
+
+Solving the partial derivatives, we have:
+
+\[
+\frac{\partial u^2}{\partial w_{i[r]}^L} = 2u {\sigma}'(w_{i[r]}^L \cdot Z^{L-1}) \cdot Z^{L-1}
+\]
+
+Where the partial derivative of $u$ with respect to $\sigma$ is represented by the Lagrange notation ${\sigma}'$. With this, we can substitute $u$ into the resolution and again apply the definition of the weights $w_{i[r+1]}^L$:
+
+\[
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \frac{2}{n} \left [\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i \right ] {\sigma}'(w_{i[r]}^L \cdot Z^{L-1}) \cdot Z^{L-1}\right )
+\]
