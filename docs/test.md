@@ -18,7 +18,7 @@ Thus, we can define $y_i$ as:
 y_i = \sigma(w_i^L \cdot Z^{L-1}), \quad w_i^L = \begin{bmatrix} w_0, w_1, \dots, w_h \end{bmatrix}, \quad Z^{L-1} = \begin{bmatrix} z_0 \\ z_1 \\ \vdots \\ z_h\end{bmatrix}
 \]
 
-Remember that when we use $w_i^L$ in $w_i^L \cdot \Z^{L-1}$, we are referring to the transposed matrix $w^t$. In other cases, this is not applied. With all variables defined, we can apply the adjustment of $w_i^L$ through $w_i^L := w_i^L - \alpha \nabla \psi_{MSE}(w_i^L)$. To better understand the assignment of new values to $w_i^L$, let's add a representative of the iterations, called $r$. Then we have:
+Remember that when we use $w_i^L$ in $w_i^L \cdot Z^{L-1}$, we are referring to the transposed matrix $w^t$. In other cases, this is not applied. With all variables defined, we can apply the adjustment of $w_i^L$ through $w_i^L := w_i^L - \alpha \nabla \psi_{MSE}(w_i^L)$. To better understand the assignment of new values to $w_i^L$, let's add a representative of the iterations, called $r$. Then we have:
 
 \[
 w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \nabla \psi_{MSE}(w_{i[r]}^L)
@@ -54,4 +54,28 @@ Where the partial derivative of $u$ with respect to $\sigma$ is represented by t
 
 \[
 w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \frac{2}{n} \left [\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i \right ] {\sigma}'(w_{i[r]}^L \cdot Z^{L-1}) \cdot Z^{L-1}\right )
+\]
+
+Knowing that $w_{i[r]}^L \in \mathbb{R}^{h \times 1}$ and also $Z^{L-1} \in \mathbb{R}^{h \times 1}$, we have:
+
+\[
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \underbrace{\frac{2}{n} \left [\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i \right ] {\sigma}'(w_{i[r]}^L \cdot Z^{L-1})}_{v} \cdot Z^{L-1}\right )
+\]
+
+So, in a more simplified manner:
+
+\[
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha v \cdot Z^{L-1}
+\]
+
+which can also be represented as:
+
+\[
+\begin{bmatrix} w_{i0[r+1]}^L \\ \vdots \\ w_{ih[r+1]}^L \end{bmatrix} := \begin{bmatrix} w_{i0[r]}^L \\ \vdots \\ w_{ih[r]}^L \end{bmatrix} - \begin{bmatrix} \alpha v z_0^{L-1} \\ \vdots \\ \alpha v z_h^{L-1}\end{bmatrix}
+\]
+
+So, for each weight $w_{ih} \in \mathbb{R}$ composing the weight vector $w_i \in \mathbb{R}^{h \times 1}$, its updated value is as follows:
+
+\[
+w_{ih[r+1]}^L := w_{ih[r]}^L - \alpha v z_{h}^{L-1}
 \]

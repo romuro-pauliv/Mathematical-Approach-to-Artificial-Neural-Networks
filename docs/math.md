@@ -199,12 +199,25 @@ Forgetting the coordinate description (solving as a single-variable equation), w
 \nabla f(x) \approx \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} \Rightarrow f(x + h) \approx f(x) + h\nabla f(x)
 ```
 
-Let's consider the scalar factor $h$ to decrease rapidly, where $h = -\alpha \nabla f(x)$ for non-negative and small enough $(h \rightarrow 0)$. Given that $(\nabla f(x))^2 \geq 0$, we can apply the general rule $f(x + h) \approx f(x) + h\nabla f(x)$ to the particular case of $h = -\alpha \nabla f(x)$. Thus, we have:
+Let's consider the scalar factor $h$ to decrease rapidly, where $h = -\alpha \nabla f(x)$ for non-negative and small enough $(\alpha \rightarrow 0)$. Then:
 
 ```math
-f(x - \alpha \nabla f(x)) \approx f(x) - \alpha \nabla f(x) \nabla f(x) = f(x) - \alpha (\nabla f(x))^2 \leq f(x)
+f(x - \alpha \nabla f(x)) \approx f(x) - \alpha (\nabla f(x))^2
 ```
-The last inequality results from the factor $(\nabla f(x))^2$ being strictly positive. That is, the function $f $ takes smaller values $f(x - \alpha \nabla f(x)) \leq f(x)$ for inputs of the form $x - \alpha \nabla f(x)$ as long as $\alpha$ remains non-negative. Therefore:
+
+We know that $(\nabla f(x))^2 \geq 0$ is strictly true. Thus, this confirms the following relationship:
+
+\[
+f(x) - \alpha (\nabla f(x))^2 \leq f(x)
+\]
+
+Therefore, knowing also that $f(x) - \alpha (\nabla f(x))^2 \approx f(x - \alpha \nabla f(x))$, we can update the term in the inequality:
+
+\[
+f(x - \alpha \nabla f(x)) \leq f(x)
+\]
+
+With the above relationship, we prove that using the term $x - \alpha \nabla f(x)$ induces its result to always be less than $f(x)$ itself. Based on this, we can define an algorithm that updates the value of $x$ for $i$ iterations:
 
 ```math
 f(\underbrace{x - \alpha \nabla f(x)}_{x_1}) \leq f(\underbrace{\quad x \quad }_{x_0})
@@ -215,3 +228,84 @@ As a consequence, the sequence of updates of the minimum values for the function
 ```math
 x_{i+1} = x_{i} - \alpha_i \nabla f(x_i)
 ```
+### Cost Function
+
+Based on the aforementioned truth, we can define a cost function $\psi: \mathbb{R}^n \rightarrow \mathbb{R}$ such that $\psi(w_0, w_1, \dots, w_n)$ where $w$ are the weights of layer $L$ of our artificial neural network. We will also define $Y = \sigma(Z^L)$ as the output of the layer and $\hat{Y}$ as the expected output of the layer. The result of the function $\psi$ is precisely the error between the layer output and the expected output. An example is given below:
+
+\[
+\psi_{MSE} = \frac{1}{n}\sum_{i=0}^{n}(y_i - \hat{y}_i)^2
+\]
+
+In $\psi_{MSE}$, we are using each element of $Y_{n \times 1}$ as $y_i$. Recapping the structure of $Y$ to clarify the situation of $y_i$:
+
+\[
+Y = \begin{bmatrix} y_0 \\ \vdots \\ y_n\end{bmatrix} = \begin{bmatrix} \sigma(z_0^L) \\ \vdots \\ \sigma(z_n^L)\end{bmatrix} = \begin{bmatrix} \sigma(w_0^L \cdot Z^{L-1}) \\ \vdots \\ \sigma(w_n^L \cdot Z^{L-1})\end{bmatrix}
+\]
+
+Thus, we can define $y_i$ as:
+
+\[
+y_i = \sigma(w_i^L \cdot Z^{L-1}), \quad w_i^L = \begin{bmatrix} w_0, w_1, \dots, w_h \end{bmatrix}, \quad Z^{L-1} = \begin{bmatrix} z_0 \\ z_1 \\ \vdots \\ z_h\end{bmatrix}
+\]
+
+Remember that when we use $w_i^L$ in $w_i^L \cdot Z^{L-1}$, we are referring to the transposed matrix $w^t$. In other cases, this is not applied. With all variables defined, we can apply the adjustment of $w_i^L$ through $w_i^L := w_i^L - \alpha \nabla \psi_{MSE}(w_i^L)$. To better understand the assignment of new values to $w_i^L$, let's add a representative of the iterations, called $r$. Then we have:
+
+\[
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \nabla \psi_{MSE}(w_{i[r]}^L)
+\]
+
+Throughout this topic, we will use the Mean Squared Error (MSE) cost function. This does not imply that only $\psi_{MSE}$ can be used; other types of cost functions can be applied, provided that all the reformulation below is redone.
+
+Given the structure of $\psi_{MSE}$ and the supposed $y_i$, we can define the following:
+
+\[
+\psi_{MSE}(w_{0[r]}^L, \dots, w_{n[r]}^L) = \frac{1}{n}\sum_{i=0}^{n}(\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i)^2
+\]
+
+Then for $\nabla \psi_{MSE}(w_{i[r]}^L)$, we have:
+
+\[
+\nabla \psi_{MSE}(w_{i[r]}^L) = \frac{1}{n}\frac{\partial}{\partial w_{i[r]}^L}(\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i)^2
+\]
+
+In the above definition, we notice that the partial derivative for each term of the sum different from $i$ is $0$, so we only have the term assigned with $i$ to solve. Let's define $u = \sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i$, then we can apply the chain rule:
+
+\[
+\frac{\partial u^2}{\partial w_{i[r]}^L} = \frac{\partial u^2}{\partial u}\frac{\partial u}{\partial \sigma}\frac{\partial \sigma}{\partial w_{i[r]}^L}
+\]
+
+Solving the partial derivatives, we have:
+
+\[
+\frac{\partial u^2}{\partial w_{i[r]}^L} = 2u {\sigma}'(w_{i[r]}^L \cdot Z^{L-1}) \cdot Z^{L-1}
+\]
+
+Where the partial derivative of $u$ with respect to $\sigma$ is represented by the Lagrange notation ${\sigma}'$. With this, we can substitute $u$ into the resolution and again apply the definition of the weights $w_{i[r+1]}^L$:
+
+\[
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \frac{2}{n} \left [\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i \right ] {\sigma}'(w_{i[r]}^L \cdot Z^{L-1}) \cdot Z^{L-1}\right )
+\]
+
+Knowing that $w_{i[r]}^L \in \mathbb{R}^{h \times 1}$ and also $Z^{L-1} \in \mathbb{R}^{h \times 1}$, we have:
+
+\[
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \underbrace{\frac{2}{n} \left [\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i \right ] {\sigma}'(w_{i[r]}^L \cdot Z^{L-1})}_{v} \cdot Z^{L-1}\right )
+\]
+
+So, in a more simplified manner:
+
+\[
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha v \cdot Z^{L-1}
+\]
+
+which can also be represented as:
+
+\[
+\begin{bmatrix} w_{i0[r+1]}^L \\ \vdots \\ w_{ih[r+1]}^L \end{bmatrix} := \begin{bmatrix} w_{i0[r]}^L \\ \vdots \\ w_{ih[r]}^L \end{bmatrix} - \begin{bmatrix} \alpha v z_0^{L-1} \\ \vdots \\ \alpha v z_h^{L-1}\end{bmatrix}
+\]
+
+So, for each weight $w_{ih} \in \mathbb{R}$ composing the weight vector $w_i \in \mathbb{R}^{h \times 1}$, its updated value is as follows:
+
+\[
+w_{ih[r+1]}^L := w_{ih[r]}^L - \alpha v z_{h}^{L-1}
+\]
