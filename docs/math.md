@@ -1,4 +1,9 @@
-## Perceptron
+# Mathematical Approach to ANN - Part 1
+
+> Developed by Pauliv, Rômulo. Data scientist, ML/AI Engineer
+
+In the document below, we will explore the development of an artificial neural network $n$-$L$-$m$ ($n$ inputs, $L$ hidden layers, and $m$ outputs), as well as the theoretical learning algorithm based on the weights $w$ of each neuron involved.
+
 In a artificial neural network (ANN) consisting of only one layer, commonly referred to as a perceptron, we have the following components that constitute a function $f(x) = y$, where $f: \mathbb{R}^{n \times 1} \rightarrow \mathbb{R}$:
 
 ### Inputs
@@ -289,23 +294,33 @@ w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \frac{2}{n} \left [\sigma(w_{i[r]}^L 
 Knowing that $w_{i[r]}^L \in \mathbb{R}^{h \times 1}$ and also $Z^{L-1} \in \mathbb{R}^{h \times 1}$, we have:
 
 \[
-w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \underbrace{\frac{2}{n} \left [\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i \right ] {\sigma}'(w_{i[r]}^L \cdot Z^{L-1})}_{v} \cdot Z^{L-1}\right )
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \underbrace{\frac{2}{n} \left [\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i \right ] {\sigma}'(w_{i[r]}^L \cdot Z^{L-1})}_{\delta} \cdot Z^{L-1}\right )
 \]
 
 So, in a more simplified manner:
 
 \[
-w_{i[r+1]}^L :=w_{i[r]}^L - \alpha v \cdot Z^{L-1}
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \delta_i^L \cdot Z^{L-1}
 \]
 
 which can also be represented as:
 
 \[
-\begin{bmatrix} w_{i0[r+1]}^L \\ \vdots \\ w_{ih[r+1]}^L \end{bmatrix} := \begin{bmatrix} w_{i0[r]}^L \\ \vdots \\ w_{ih[r]}^L \end{bmatrix} - \begin{bmatrix} \alpha v z_0^{L-1} \\ \vdots \\ \alpha v z_h^{L-1}\end{bmatrix}
+\begin{bmatrix} w_{i0[r+1]}^L \\ \vdots \\ w_{ih[r+1]}^L \end{bmatrix} := \begin{bmatrix} w_{i0[r]}^L \\ \vdots \\ w_{ih[r]}^L \end{bmatrix} - \begin{bmatrix} \alpha \delta_0^L z_0^{L-1} \\ \vdots \\ \alpha \delta_h^L z_h^{L-1}\end{bmatrix}
 \]
 
 So, for each weight $w_{ih} \in \mathbb{R}$ composing the weight vector $w_i \in \mathbb{R}^{h \times 1}$, its updated value is as follows:
 
 \[
-w_{ih[r+1]}^L := w_{ih[r]}^L - \alpha v z_{h}^{L-1}
+w_{ih[r+1]}^L := w_{ih[r]}^L - \alpha \delta_h^L z_{h}^{L-1}
 \]
+
+### Backpropagation
+
+This process is only valid for the outputs $\sigma(Z^L) = Y$. Therefore, for the hidden layers, the same process will be applied, but with a different approach to the cost function due to the absence of targets $\hat{Y}$ for the previous layers. This implies the development of the algorithm commonly known as backpropagation, which will be introduced in __Part 2__ of this document.
+
+# References
+1. García Cabello, J. Mathematical Neural Networks. Axioms 2022, 11, 80
+2. Popoviciu, N.; Baicu, F. The Mathematical Foundation and a Step by Step Description for 17 Algorithms on Artificial Neural Networks. In Proceedings of the 9th WSEAS International Conference on AI Knowledge Engineering and Data Bases, Cambridge UK, 20–22 February 2010; p. 23.
+3. Leshno, M.; Lin, V.Y.; Pinkus, A.; Schocken, S. Multilayer feedforward networks with a nonpolynomial activation function can approximate any function. Neural Netw. 1993, 6, 861–867
+4. Cooper, A.M.; Kastner, J.; Urban, A. Efficient training of ANN potentials by including atomic forces via Taylor expansion and application to water and a transition-metal oxide. Comput. Mater. 2020, 6, 54.
