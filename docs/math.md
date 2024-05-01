@@ -253,10 +253,10 @@ Thus, we can define $y_i$ as:
 y_i = \sigma(w_i^L \cdot Z^{L-1}), \quad w_i^L = \begin{bmatrix} w_0, w_1, \dots, w_h \end{bmatrix}, \quad Z^{L-1} = \begin{bmatrix} z_0 \\ z_1 \\ \vdots \\ z_h\end{bmatrix}
 \]
 
-Remember that when we use $w_i^L$ in $w_i^L \cdot Z^{L-1}$, we are referring to the transposed matrix $w^t$. In other cases, this is not applied. With all variables defined, we can apply the adjustment of $w_i^L$ through $w_i^L := w_i^L - \alpha \nabla \psi_{MSE}(w_i^L)$. To better understand the assignment of new values to $w_i^L$, let's add a representative of the iterations, called $r$. Then we have:
+Remember that when we use $w_i^L$ in $w_i^L \cdot Z^{L-1}$, we are referring to the transposed matrix $w^t$. In other cases, this is not applied. With all variables defined, we can apply the adjustment of $w_i^L$ through $x_{i+1} = x - \alpha {f}'(x)$ demostrated in Proof of Theoretical Learning Algorithm. To better understand the assignment of new values to $w_i^L$, let's add a representative of the iterations, called $r$. Then we have:
 
 \[
-w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \nabla \psi_{MSE}(w_{i[r]}^L)
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \frac{\partial}{\partial w_{i[r]}^L} \psi_{MSE}(w_{0[r]}^L, \dots, w_{i[r]}^L)
 \]
 
 Throughout this topic, we will use the Mean Squared Error (MSE) cost function. This does not imply that only $\psi_{MSE}$ can be used; other types of cost functions can be applied, provided that all the reformulation below is redone.

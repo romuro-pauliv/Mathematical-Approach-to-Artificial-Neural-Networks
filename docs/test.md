@@ -3,7 +3,7 @@
 Based on the aforementioned truth, we can define a cost function $\psi: \mathbb{R}^n \rightarrow \mathbb{R}$ such that $\psi(w_0, w_1, \dots, w_n)$ where $w$ are the weights of layer $L$ of our artificial neural network. We will also define $Y = \sigma(Z^L)$ as the output of the layer and $\hat{Y}$ as the expected output of the layer. The result of the function $\psi$ is precisely the error between the layer output and the expected output. An example is given below:
 
 \[
-\psi_{MSE} = \frac{1}{n}\sum_{i=0}^{n}(y_i - \hat{y}_i)^2
+\psi_{MSE}(w_0, \dots, w_n) = \frac{1}{n}\sum_{i=0}^{n}(y_i(w_i) - \hat{y}_i)^2
 \]
 
 In $\psi_{MSE}$, we are using each element of $Y_{n \times 1}$ as $y_i$. Recapping the structure of $Y$ to clarify the situation of $y_i$:
@@ -18,39 +18,54 @@ Thus, we can define $y_i$ as:
 y_i = \sigma(w_i^L \cdot Z^{L-1}), \quad w_i^L = \begin{bmatrix} w_0, w_1, \dots, w_h \end{bmatrix}, \quad Z^{L-1} = \begin{bmatrix} z_0 \\ z_1 \\ \vdots \\ z_h\end{bmatrix}
 \]
 
-Remember that when we use $w_i^L$ in $w_i^L \cdot Z^{L-1}$, we are referring to the transposed matrix $w^t$. In other cases, this is not applied. With all variables defined, we can apply the adjustment of $w_i^L$ through $w_i^L := w_i^L - \alpha \nabla \psi_{MSE}(w_i^L)$. To better understand the assignment of new values to $w_i^L$, let's add a representative of the iterations, called $r$. Then we have:
+Remember that when we use $w_i^L$ in $w_i^L \cdot Z^{L-1}$, we are referring to the transposed matrix $w^t$. In other cases, this is not applied. 
+
+
+Based on what we learned in the Theoretical Learning Algorithm topic, for a function, \( f: \mathbb{R}^2 \rightarrow \mathbb{R} \), where \( f(x, y) = z \):
 
 \[
-w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \nabla \psi_{MSE}(w_{i[r]}^L)
+\begin{bmatrix} x_{r+1} \\ y_{r+1}\end{bmatrix} := \begin{bmatrix} x_r \\ y_r \end{bmatrix} - \alpha \begin{bmatrix} \frac{\partial}{\partial x_r} f(x_r, y_r) \\\\ \frac{\partial}{\partial y_r} f(x_r, y_r) \end{bmatrix} \Rightarrow f(x_{r+1}, y_{r+1}) \leq f(x_r, y_r)
+\]
+
+Thus, for a single variable, in this case, \( x \), of the function \( f(x, y) \), to update it to satisfy the condition \( f(x_{r+1}, y_{r+1}) \leq f(x_r, y_r) \), we can define the following assignment:
+
+\[
+x_{r+1} := x_{r} - \alpha \frac{\partial}{\partial x_r} f(x_r, y_r)
+\]
+
+Based on this, we can apply the same concept to the cost function \( \psi_{MSE}(w_0^L, \dots, w_n^L) \) with respect to the weight vector \( w_i^L \). In the representation below, we define the value \( r \) to refer to the number of update iterations.
+
+\[
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \frac{\partial}{\partial w_{i[r]}^L} \psi_{MSE}(w_{0[r]}^L, \dots, w_{i[r]}^L)
 \]
 
 Throughout this topic, we will use the Mean Squared Error (MSE) cost function. This does not imply that only $\psi_{MSE}$ can be used; other types of cost functions can be applied, provided that all the reformulation below is redone.
 
-Given the structure of $\psi_{MSE}$ and the supposed $y_i$, we can define the following:
+Given the structure of $\psi_{MSE}$ and the supposed $y_i(w_i^L)$, we can define the following:
 
 \[
 \psi_{MSE}(w_{0[r]}^L, \dots, w_{n[r]}^L) = \frac{1}{n}\sum_{i=0}^{n}(\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i)^2
 \]
 
-Then for $\nabla \psi_{MSE}(w_{i[r]}^L)$, we have:
+Then for ${\psi}'_{MSE}(w_{0[r]}^L, \dots, w_{i[r]}^L)$, we have:
 
 \[
-\nabla \psi_{MSE}(w_{i[r]}^L) = \frac{1}{n}\frac{\partial}{\partial w_{i[r]}^L}(\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i)^2
+\frac{\partial}{\partial w_{i[r]}^L} \psi_{MSE}(w_{0[r]}^L, \dots, w_{i[r]}^L) = \frac{1}{n}\frac{\partial}{\partial w_{i[r]}^L}(\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i)^2
 \]
 
-In the above definition, we notice that the partial derivative for each term of the sum different from $i$ is $0$, so we only have the term assigned with $i$ to solve. Let's define $u = \sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i$, then we can apply the chain rule:
+In the above definition, we notice that the partial derivative for each term of the sum different from $i$ is $0$, so we only have the term assigned with $i$ to solve. Let's define $E = \sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i$, then we can apply the chain rule:
 
 \[
-\frac{\partial u^2}{\partial w_{i[r]}^L} = \frac{\partial u^2}{\partial u}\frac{\partial u}{\partial \sigma}\frac{\partial \sigma}{\partial w_{i[r]}^L}
+\frac{\partial E^2}{\partial w_{i[r]}^L} = \frac{\partial E^2}{\partial E}\frac{\partial E}{\partial \sigma}\frac{\partial \sigma}{\partial w_{i[r]}^L}
 \]
 
 Solving the partial derivatives, we have:
 
 \[
-\frac{\partial u^2}{\partial w_{i[r]}^L} = 2u {\sigma}'(w_{i[r]}^L \cdot Z^{L-1}) \cdot Z^{L-1}
+\frac{\partial E^2}{\partial w_{i[r]}^L} = 2E {\sigma}'(w_{i[r]}^L \cdot Z^{L-1}) \cdot Z^{L-1}
 \]
 
-Where the partial derivative of $u$ with respect to $\sigma$ is represented by the Lagrange notation ${\sigma}'$. With this, we can substitute $u$ into the resolution and again apply the definition of the weights $w_{i[r+1]}^L$:
+Where the partial derivative of $u$ with respect to $\sigma$ is represented by the Lagrange notation ${\sigma}'$. With this, we can substitute $E$ into the resolution and again apply the definition of the weights $w_{i[r+1]}^L$:
 
 \[
 w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \frac{2}{n} \left [\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i \right ] {\sigma}'(w_{i[r]}^L \cdot Z^{L-1}) \cdot Z^{L-1}\right )
@@ -59,23 +74,23 @@ w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \frac{2}{n} \left [\sigma(w_{i[r]}^L 
 Knowing that $w_{i[r]}^L \in \mathbb{R}^{h \times 1}$ and also $Z^{L-1} \in \mathbb{R}^{h \times 1}$, we have:
 
 \[
-w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \underbrace{\frac{2}{n} \left [\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i \right ] {\sigma}'(w_{i[r]}^L \cdot Z^{L-1})}_{v} \cdot Z^{L-1}\right )
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \underbrace{\frac{2}{n} \left [\sigma(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i \right ] {\sigma}'(w_{i[r]}^L \cdot Z^{L-1})}_{\delta} \cdot Z^{L-1}\right )
 \]
 
 So, in a more simplified manner:
 
 \[
-w_{i[r+1]}^L :=w_{i[r]}^L - \alpha v \cdot Z^{L-1}
+w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \delta_i^L \cdot Z^{L-1}
 \]
 
 which can also be represented as:
 
 \[
-\begin{bmatrix} w_{i0[r+1]}^L \\ \vdots \\ w_{ih[r+1]}^L \end{bmatrix} := \begin{bmatrix} w_{i0[r]}^L \\ \vdots \\ w_{ih[r]}^L \end{bmatrix} - \begin{bmatrix} \alpha v z_0^{L-1} \\ \vdots \\ \alpha v z_h^{L-1}\end{bmatrix}
+\begin{bmatrix} w_{i0[r+1]}^L \\ \vdots \\ w_{ih[r+1]}^L \end{bmatrix} := \begin{bmatrix} w_{i0[r]}^L \\ \vdots \\ w_{ih[r]}^L \end{bmatrix} - \begin{bmatrix} \alpha \delta_0^L z_0^{L-1} \\ \vdots \\ \alpha \delta_h^L z_h^{L-1}\end{bmatrix}
 \]
 
 So, for each weight $w_{ih} \in \mathbb{R}$ composing the weight vector $w_i \in \mathbb{R}^{h \times 1}$, its updated value is as follows:
 
 \[
-w_{ih[r+1]}^L := w_{ih[r]}^L - \alpha v z_{h}^{L-1}
+w_{ih[r+1]}^L := w_{ih[r]}^L - \alpha \delta_h^L z_{h}^{L-1}
 \]
