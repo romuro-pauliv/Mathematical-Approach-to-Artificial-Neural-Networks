@@ -1,0 +1,116 @@
+### Theoretical Learning Algorithm
+
+Let's consider a cost function $E(W)$, where it represents the error value between the output of the layer and the expected value. The objective of this function is to provide a method that, by modifying the values of $W$, we can reduce the error indicated by the function $E(W)$ until it is the smallest possible value.
+
+For this, we can apply the gradient of the function $E(W)$. Let's recall the gradient theorem below:
+
+__Theorem 1__ (Gradient of a function). _Let $E: R^n \rightarrow R$ be a differenciable function in the neighbourhood of some points $W = \begin{bmatrix} w_0 & w_1 & \dots & w_i\end{bmatrix}$ where $i$ represents the number of neurons in this hypothetical layer. Then, the gradient of $E$ at $W$, denote by $\nabla E(W)$,_
+
+1. _represents the slope of the tangent line to the function $E$ at the point $w$_;
+2. _points in the direction in which the function $E$ most rapidly increases; thus, $-\nabla E$ indicates the direction of fastest decreasing_;
+3. _is orthogonal to the level surfaces (generalization of the concept of a level curve for a function of two variables) of $E$, i.e., those of the form $E(W) = k$ for a constant $k$_
+
+#### Example of $\nabla f$:
+
+To facilitate understanding, let's define the function $f: \mathbb{R}^2 \rightarrow \mathbb{R}$ such that:
+
+```math
+f(x, y) = x^2 + y^2
+```
+
+If we visualize the function graphically, we have:
+
+<div style="text-align:center;">
+    <img src="/img/gradient_example_1.svg" alt="f(x, y) = x^2 + y^2"/>
+</div>
+
+Based on the function $f(x, y)$, we can define $-\nabla f(x, y)$ according to Theorem 1, item 2. Thus, we obtain a vector field with the following deduction:
+
+```math
+- \nabla f(x, y) = \begin{bmatrix} -\dfrac{\partial f(x, y)}{\partial x} = -2x \\\\ -\dfrac{\partial f(x, y)}{\partial y} = -2y \end{bmatrix}
+```
+
+To facilitate visualization, we can have a two-dimensional perspective $(x, y)$ of the function $f(x, y)$ where the coloration of the graph below will indicate the value of the $z$-axis. The intention is that the vectors point towards the minimum of the function, where the farther from the minimum, the greater the resultant of the vector, and the closer to the minimum, the smaller the resultant of the vector.
+
+<div style="text-align:center;">
+    <img src="/img/gradient_example_2.svg" alt="-\nabla f(x, y)"/>
+</div>
+
+Having the gradient descent $-\nabla f(x, y)$ at hand, we can define the algorithm responsible for updating the coordinates $x, y$ until they converge to the minimum of the function $f(x, y)$. Therefore, we can correct the values of $x$ and $y$ for $i$ iterations by adjusting the values based on the gradient descent.
+
+In an empirical way, we can deduce that updating the values of $x_{i+1}$ and $y_{i+1}$ based on the gradient of $x_i$ and $y_i$ is given by:
+```math
+\begin{bmatrix} x_{i+1} \\ y_{i+1}\end{bmatrix} = \begin{bmatrix} x_{i} \\ y_{i}\end{bmatrix} - \alpha \begin{bmatrix} 2x_{i} \\ 2y_{i}\end{bmatrix}
+```
+
+The term $\alpha$ will be introduced later in the proof of this structure; for now, let's use it as a multiplier of the gradient, where the higher the $\alpha$, the greater the correction towards the minimum of the function, and the lower the $\alpha$, the smaller the correction towards the minimum of the function. This way, we can understand that:
+
+```math
+f(x_{i+1}, y_{i+1}) \leq f(x_{i}, y_{i}) 
+```
+Iterating $i$ times, we know that the condition $f(x, y) = 0$ will be true.
+
+Below, we will see a simulation where we have coordinates $x, y$ far from the minimum of the function. We know that, based on the vector field, we will have a straight-line trajectory towards the minimum of the function. Because of this, we implement a random variable $\tau \in [-0.1, 0.1]$ to visualize how the gradient will perform. Therefore, the update relation of the coordinates will be:
+
+```math
+\begin{bmatrix} x_{i+1} \\ y_{i+1}\end{bmatrix} = \begin{bmatrix} x_{i} \\ y_{i}\end{bmatrix} - \alpha \begin{bmatrix} 2x_{i} \\ 2y_{i}\end{bmatrix} + \begin{bmatrix} \tau \\  \tau \end{bmatrix}
+```
+Based on the formulation above, we have the following simulation with various values of $\alpha$:
+
+<div style="text-align:center;">
+    <img src="/img/gradient_example_3.svg" alt="Gradient Descent Minimum Simulation"/>
+</div>
+
+Based on the simulation above, we see that when $\alpha$ is small, we take a small step towards the minimum of the function. When $\alpha$ is large, we take a large step towards the minimum of the function. In more complex functions, where there may be local minima, a large step may avoid them, while a small step may trap the algorithm in these minima.
+
+We will address more analytical questions on this subject later. Now, we should focus on the proof of this structure.
+
+#### Proof
+
+Given $x_i \in \mathbb{R}$ and a differentiable function $f: \mathbb{R}^n \rightarrow \mathbb{R}$, we can define the gradient $\nabla f(x_0, x_1, \dots, x_n)$. Let's represent $x_0, x_1, \dots, x_n$ as $x$ in the derivation below:
+
+```math
+\nabla f(x) = \left(\frac{\partial f(x)}{\partial x_0}, \frac{\partial f(x)}{\partial x_1}, \dots, \frac{\partial f(x)}{\partial x_n}\right) = ({f}'(x_0), {f}'(x_1), \dots, {f}'(x_n))
+```
+
+Based on the truth above, we can use the definition of limit:
+
+```math
+\nabla f(x) \approx \left(\lim_{h \rightarrow 0} \frac{f(x_0 + h) - f(x_0)}{h}, \lim_{h \rightarrow 0} \frac{f(x_1 + h) - f(x_1)}{h}, \dots, \lim_{h \rightarrow 0} \frac{f(x_n + h) - f(x_n)}{h}\right)
+```
+
+Forgetting the coordinate description (solving as a single-variable equation), we have:
+
+```math
+\nabla f(x) \approx \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} \Rightarrow f(x + h) \approx f(x) + h\nabla f(x)
+```
+
+Let's consider the scalar factor $h$ to decrease rapidly, where $h = -\alpha \nabla f(x)$ for non-negative and small enough $(\alpha \rightarrow 0)$. Then:
+
+```math
+f(x - \alpha \nabla f(x)) \approx f(x) - \alpha (\nabla f(x))^2
+```
+
+We know that $(\nabla f(x))^2 \geq 0$ is strictly true. Thus, this confirms the following relationship:
+
+\[
+f(x) - \alpha (\nabla f(x))^2 \leq f(x)
+\]
+
+Therefore, knowing also that $f(x) - \alpha (\nabla f(x))^2 \approx f(x - \alpha \nabla f(x))$, we can update the term in the inequality:
+
+\[
+f(x - \alpha \nabla f(x)) \leq f(x)
+\]
+
+With the above relationship, we prove that using the term $x - \alpha \nabla f(x)$ induces its result to always be less than $f(x)$ itself. Based on this, we can define an algorithm that updates the value of $x$ for $i$ iterations:
+
+```math
+f(\underbrace{x - \alpha \nabla f(x)}_{x_1}) \leq f(\underbrace{\quad x \quad }_{x_0})
+```
+
+As a consequence, the sequence of updates of the minimum values for the function $f(x)$ with initial values $x_0$ is:
+
+```math
+x_{i+1} = x_{i} - \alpha_i \nabla f(x_i)
+```
