@@ -65,7 +65,7 @@ Solving the partial derivatives, we have:
 \frac{\partial E^2}{\partial w_{i[r]}^L} = 2E {\varphi}'(w_{i[r]}^L \cdot Z^{L-1}) \cdot Z^{L-1}
 \]
 
-Where the partial derivative of $u$ with respect to $\varphi$ is represented by the Lagrange notation ${\varphi}'$. With this, we can substitute $E$ into the resolution and again apply the definition of the weights $w_{i[r+1]}^L$:
+Where the partial derivative of $E$ with respect to $\varphi$ is represented by the Lagrange notation ${\varphi}'$. With this, we can substitute $E$ into the resolution and again apply the definition of the weights $w_{i[r+1]}^L$:
 
 \[
 w_{i[r+1]}^L :=w_{i[r]}^L - \alpha \left ( \frac{2}{n} \left [\varphi(w_{i[r]}^L \cdot Z^{L-1}) - \hat{y}_i \right ] {\varphi}'(w_{i[r]}^L \cdot Z^{L-1}) \cdot Z^{L-1}\right )
@@ -94,3 +94,4 @@ So, for each weight $w_{ih} \in \mathbb{R}$ composing the weight vector $w_i \in
 \[
 w_{ih[r+1]}^L := w_{ih[r]}^L - \alpha \delta_h^L z_{h}^{L-1}
 \]
+
