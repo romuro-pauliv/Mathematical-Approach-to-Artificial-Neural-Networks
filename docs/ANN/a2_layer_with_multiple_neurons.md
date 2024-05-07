@@ -1,8 +1,8 @@
 ### Layer with Multiple Neurons
 
-In the previous definition, we had a layer with only one neuron. In this topic, we will define the behavior of a layer with $i$-neurons. Thus, the function $f(x) = y$ will not define only the behavior of one neuron but of $i$-neurons.
+In the previous definition, we had a layer with only one neuron. In this topic, we will define the behavior of a layer with $n$-neurons. Thus, the function $f(X) = y$ will not define only the behavior of one neuron but of $n$-neurons.
 
-Therefore, we will have the definition of $f^L(x)$ where $L$ is the index of the layer. Each layer $L$ can have $i$ neurons. So, for each neuron $i$, we will have an output of the transfer function $z_{i}^1$ in the layer $f^1(x)$.
+Therefore, we will have the definition of $f^L(X)$ where $L$ is the index of the layer. Each layer $L$ can have $n_L$ neurons. So, for each neuron $n$, we will have an output $a_{n}^1$ in the layer $f^1(X)$.
 
 <img src="/img/layer_with_multiple_neurons.svg" alt="Multilayer Perceptron First Layer"/>
 
