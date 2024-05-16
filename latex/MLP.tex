@@ -1,6 +1,5 @@
 \documentclass{article}
 
-
 \usepackage{arxiv}
 
 \usepackage[utf8]{inputenc} % allow utf-8 input
@@ -16,39 +15,17 @@
 \graphicspath{ {./images/} }
 
 
-\title{Predict future sale}
+\title{Mathematical demonstration of the Multilayer Perceptron and Backpropagation}
 
 
 \author{
- Ziyue Qi \\
-  School of Coumputing and Information\\
-  University of Pittsburgh\\
-  Pittsburgh, PA 15213 \\
-  \texttt{ziq2@pitt.edu} \\
+ Rômulo L. Pauliv \\
+  %%XX\\
+  %%XX\\
+  Ponta Grossa, Paraná, Brazil\\
+  \texttt{romulopauliv1999@gmail.com} \\
   %% examples of more authors
-   \And
- Zixuan Lu \\
-  School of Coumputing and Information\\
-  University of Pittsburgh\\
-  Pittsburgh, PA 15213 \\
-  \texttt{ZIL50@pitt.edu} \\
-  \And
- Yuchen Lu \\
-  School of Coumputing and Information\\
-  University of Pittsburgh\\
-  Pittsburgh, PA 15213 \\
-  \texttt{yul217@pitt.edu} \\
   %% \AND
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
-  %% \And
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
-  %% \And
   %% Coauthor \\
   %% Affiliation \\
   %% Address \\
@@ -58,16 +35,25 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Data mining is a good way to find the relationship between raw data and predict the target we want which is also widely used in different field nowadays. In this project, we implement a lots of technology and method in data mining to predict the sale of an item based on its previous sale. We create a strong model to predict the sales. After evaluating this model, we conclude that this model can be used in normal life for future sale’s prediction. 
+  The aim of this paper is to establish a solid foundation for the mathematical treatment of artificial neural networks in a didactic and clear manner. To achieve this goal, we will mathematically demonstrate the progression from a simple perceptron to the generalization of a multilayer perceptron (MLP), along with the theoretical learning algorithm based on backpropagation.
 \end{abstract}
 
 
 % keywords can be removed
-%\keywords{First keyword \and Second keyword \and More}
+\keywords{ANN \and backpropagation \and ML \and MLP}
 
 
 \section{Introduction}
-Our project is a competition on Kaggle (Predict Future Sales). We are provided with daily historical sales data (including each products’ sale date, block ,shop price and amount). And we will use it to forecast the total amount of each product sold next month. Because of the list of shops and products slightly changes every month. We need to create a robust model that can handle such situations.
+As redes neurais artificiais (ANNs) são amplamente reconhecidas por sua eficácia na classificação/reconhecimento de padrões em conjuntos de dados devido à capacidade de aprendizado que possuem. Isso levanta a questão fundamental de como caracterizar o aprendizado em um ambiente não humano e representá-lo de maneira matemática.
+
+Quando falamos em aprendizado, frequentemente o associamos a conceitos como aquisição, retenção e aplicação de informações em diferentes contextos. No entanto, uma análise mais profunda nos leva a relacionar o aprendizado com o conceito de erro e processos iterativos. 
+
+Tal fator se deve à constatação de que, ao agir sobre algum objeto com a intenção de gerar um resultado específico sem ter ciência de que maneira, estamos expostos a falhar nesse objetivo. Executando a ação inúmeras vezes, é possível encontrar a ação que gera a resultante específica desejada, onde, ao encontrá-la, podemos discernir as ações que levam ou não a resultante esperada. Logo, podemos conceber que um dos resultados do aprendizado é a capacidade de discernir se algo está em desacordo com a realidade já observada, ou seja, um erro. 
+
+Nesse contexto, é necessário julgar tal objeto com base em suas propriedades observadas para atribuir diferentes estados a ele e, caso esse estado esteja em desacordo com a realidade já observada, é necessário o ajuste da ação julgar. Portanto, se atribuímos a capacidade de aprendizado a um objeto, esse objeto também deve ser capaz de atribuir diferentes estados a outros objetos com base na sua percepção, ajustando constantemente o mecanismo que faz tal atribuição. 
+
+Para isso, Frank Rosenblatt cunhou o termo "perceptron" em seu trabalho "Principles of Neurodynamics: Perceptrons and the Theory of Brain Mechanisms". Assim, iniciaremos nossa abordagem matemática das ANNs com o desenvolvimento de um objeto elementar dotado de percepção, ou seja, o perceptron. Após, iremos aprovisionar tal percetron de maior complexidade com o objetivo de capacita-lo em gerir e correlacionar mais informações, isto é, um multilayer percetron (MLP). Por último, dota-lo com a capacidade de julgamento através de sua percepção. 
+
 
 
 \section{Task description and data construction}
@@ -82,7 +68,7 @@ In the Sales train dataset, it only contains two columns(item id and shop id). B
 \subsection{Headings: second level}
 \lipsum[5]
 \begin{equation}
-\xi _{ij}(t)=P(x_{t}=i,x_{t+1}=j|y,v,w;\theta)= {\frac {\alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}{\sum _{i=1}^{N} \sum _{j=1}^{N} \alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}}
+  \xi _{ij}(t)=P(x_{t}=i,x_{t+1}=j|y,v,w;\theta)= {\frac {\alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}{\sum _{i=1}^{N} \sum _{j=1}^{N} \alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}}
 \end{equation}
 
 \subsubsection{Headings: third level}
@@ -115,9 +101,9 @@ produces
 
 
 \subsection{Figures}
-\lipsum[10] 
+\lipsum[10]
 See Figure \ref{fig:fig1}. Here is how you add footnotes. \footnote{Sample of the first footnote.}
-\lipsum[11] 
+\lipsum[11]
 
 \begin{figure}
   \centering
@@ -127,8 +113,8 @@ See Figure \ref{fig:fig1}. Here is how you add footnotes. \footnote{Sample of th
 \end{figure}
 
 \begin{figure} % picture
-    \centering
-    \includegraphics{test.png}
+  \centering
+  \includegraphics{test.png}
 \end{figure}
 
 \subsection{Tables}
@@ -136,7 +122,7 @@ See Figure \ref{fig:fig1}. Here is how you add footnotes. \footnote{Sample of th
 See awesome Table~\ref{tab:table}.
 
 \begin{table}
- \caption{Sample table title}
+  \caption{Sample table title}
   \centering
   \begin{tabular}{lll}
     \toprule
@@ -154,13 +140,13 @@ See awesome Table~\ref{tab:table}.
 
 \subsection{Lists}
 \begin{itemize}
-\item Lorem ipsum dolor sit amet
-\item consectetur adipiscing elit. 
-\item Aliquam dignissim blandit est, in dictum tortor gravida eget. In ac rutrum magna.
+  \item Lorem ipsum dolor sit amet
+  \item consectetur adipiscing elit.
+  \item Aliquam dignissim blandit est, in dictum tortor gravida eget. In ac rutrum magna.
 \end{itemize}
 
 
-\bibliographystyle{unsrt}  
+\bibliographystyle{unsrt}
 %\bibliography{references}  %%% Remove comment to use the external .bib file (using bibtex).
 %%% and comment out the ``thebibliography'' section.
 
@@ -168,24 +154,24 @@ See awesome Table~\ref{tab:table}.
 %%% Comment out this section when you \bibliography{references} is enabled.
 \begin{thebibliography}{1}
 
-\bibitem{kour2014real}
-George Kour and Raid Saabne.
-\newblock Real-time segmentation of on-line handwritten arabic script.
-\newblock In {\em Frontiers in Handwriting Recognition (ICFHR), 2014 14th
-  International Conference on}, pages 417--422. IEEE, 2014.
+  \bibitem{kour2014real}
+  George Kour and Raid Saabne.
+  \newblock Real-time segmentation of on-line handwritten arabic script.
+  \newblock In {\em Frontiers in Handwriting Recognition (ICFHR), 2014 14th
+      International Conference on}, pages 417--422. IEEE, 2014.
 
-\bibitem{kour2014fast}
-George Kour and Raid Saabne.
-\newblock Fast classification of handwritten on-line arabic characters.
-\newblock In {\em Soft Computing and Pattern Recognition (SoCPaR), 2014 6th
-  International Conference of}, pages 312--318. IEEE, 2014.
+  \bibitem{kour2014fast}
+  George Kour and Raid Saabne.
+  \newblock Fast classification of handwritten on-line arabic characters.
+  \newblock In {\em Soft Computing and Pattern Recognition (SoCPaR), 2014 6th
+      International Conference of}, pages 312--318. IEEE, 2014.
 
-\bibitem{hadash2018estimate}
-Guy Hadash, Einat Kermany, Boaz Carmeli, Ofer Lavi, George Kour, and Alon
+  \bibitem{hadash2018estimate}
+  Guy Hadash, Einat Kermany, Boaz Carmeli, Ofer Lavi, George Kour, and Alon
   Jacovi.
-\newblock Estimate and replace: A novel approach to integrating deep neural
+  \newblock Estimate and replace: A novel approach to integrating deep neural
   networks with existing applications.
-\newblock {\em arXiv preprint arXiv:1804.09028}, 2018.
+  \newblock {\em arXiv preprint arXiv:1804.09028}, 2018.
 
 \end{thebibliography}
 
