@@ -44,24 +44,23 @@
 
 
 \section{Introduction}
-As redes neurais artificiais (ANNs) são amplamente reconhecidas por sua eficácia na classificação/reconhecimento de padrões em conjuntos de dados devido à capacidade de aprendizado que possuem. Isso levanta a questão fundamental de como caracterizar o aprendizado em um ambiente não humano e representá-lo de maneira matemática.
+Artificial neural networks (ANNs) are widely recognized for their effectiveness in pattern classification and recognition in datasets, owing to their learning capabilities. This raises the fundamental question of how to characterize learning in a non-human environment and represent it mathematically.
 
-Quando falamos em aprendizado, frequentemente o associamos a conceitos como aquisição, retenção e aplicação de informações em diferentes contextos. No entanto, uma análise mais profunda nos leva a relacionar o aprendizado com o conceito de erro e processos iterativos. 
+When discussing learning, it is often associated with concepts such as the acquisition, retention, and application of information in various contexts. However, a deeper analysis links learning to the concept of error and iterative processes.
 
-Tal fator se deve à constatação de que, ao agir sobre algum objeto com a intenção de gerar um resultado específico sem ter ciência de que maneira, estamos expostos a falhar nesse objetivo. Executando a ação inúmeras vezes, é possível encontrar a ação que gera a resultante específica desejada, onde, ao encontrá-la, podemos discernir as ações que levam ou não a resultante esperada. Logo, podemos conceber que um dos resultados do aprendizado é a capacidade de discernir se algo está em desacordo com a realidade já observada, ou seja, um erro. 
+This factor arises from the observation that when attempting to achieve a specific outcome without knowing the precise method, we are prone to failure. By repeatedly performing the action, it becomes possible to identify the action that produces the desired result. Once identified, we can discern which actions lead to the expected outcome and which do not. Thus, one of the outcomes of learning is the ability to recognize when something deviates from previously observed reality, i.e., an error.
 
-Nesse contexto, é necessário julgar tal objeto com base em suas propriedades observadas para atribuir diferentes estados a ele e, caso esse estado esteja em desacordo com a realidade já observada, é necessário o ajuste da ação julgar. Portanto, se atribuímos a capacidade de aprendizado a um objeto, esse objeto também deve ser capaz de atribuir diferentes estados a outros objetos com base na sua percepção, ajustando constantemente o mecanismo que faz tal atribuição. 
+In this context, it is necessary to evaluate an object based on its observed properties to assign it different states. If a state is found to be inconsistent with previously observed reality, the evaluative action must be adjusted. Therefore, if we attribute learning capability to an object, this object must also be able to assign different states to other objects based on its perception, continually adjusting the mechanism that makes such assignments.
 
-Para isso, Frank Rosenblatt cunhou o termo "perceptron" em seu trabalho "Principles of Neurodynamics: Perceptrons and the Theory of Brain Mechanisms". Assim, iniciaremos nossa abordagem matemática das ANNs com o desenvolvimento de um objeto elementar dotado de percepção, ou seja, o perceptron. Após, iremos aprovisionar tal percetron de maior complexidade com o objetivo de capacitá-lo em gerir e correlacionar mais informações, isto é, um multilayer percetron (MLP). Por último, dotá-lo com a capacidade de julgamento através de sua percepção. 
-
+To this end, Frank Rosenblatt coined the term "perceptron" in his work "Principles of Neurodynamics: Perceptrons and the Theory of Brain Mechanisms." We will begin our mathematical approach to ANNs by developing an elementary object endowed with perception, the perceptron. Subsequently, we will enhance this perceptron to increase its complexity, enabling it to manage and correlate more information, thus creating a multilayer perceptron (MLP). Finally, we will endow it with the capacity for judgment through its perception.
 
 
 \section{Perceptron}
-Nosso objetivo é construir um perceptron que seja descrito por uma função \(f\) tal que \(f: \mathbb{R}^n \rightarrow \Theta\) onde \(\Theta\) representa qualquer contradomínío possível. Isso implica que, nessa função as variáveis independentes ou inputs representarão o estímulo do perceptron e a variável dependente ou output a resposta desse estímulo. 
+Our objective is to construct a perceptron described by a function \(f\) such that \(f: \mathbb{R}^n \rightarrow \Theta\), where \(\Theta\) represents any possible codomain. This implies that in this function, the independent variables or inputs will represent the stimulus to the perceptron, and the dependent variable or output will represent the response to this stimulus.
 
 \subsection[]{Inputs}
 
-O input será denotado por um vetor \(X\) tal que \(X \in \mathbb{R}^n\). Logo, temos que \(X^T = [x_1, \dots, x_n]\) onde o superescrito \(T\) representa a forma transposta do vetor \(X\). Repare que no vetor não há o elemento \(x_0\). Isso se deve ao fato que iremos reservar tal termo para o que futuramente será introduzido como o bias. Logo, os inputs ou variáveis independentes serão listado de \(i=1, \dots, n\).
+The input will be denoted by a vector \(X\) such that \(X \in \mathbb{R}^n\). Therefore, we have \(X^T = [x_1, \dots, x_n]\), where the superscript \(T\) represents the transpose of the vector \(X\). Note that the vector does not include the element \(x_0\). This is because we will reserve this term for what will later be introduced as the bias. Consequently, the inputs or independent variables will be listed as \(i=1, \dots, n\).
 
 \subsection[]{Outputs}
 
