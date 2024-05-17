@@ -52,18 +52,24 @@ Tal fator se deve à constatação de que, ao agir sobre algum objeto com a inte
 
 Nesse contexto, é necessário julgar tal objeto com base em suas propriedades observadas para atribuir diferentes estados a ele e, caso esse estado esteja em desacordo com a realidade já observada, é necessário o ajuste da ação julgar. Portanto, se atribuímos a capacidade de aprendizado a um objeto, esse objeto também deve ser capaz de atribuir diferentes estados a outros objetos com base na sua percepção, ajustando constantemente o mecanismo que faz tal atribuição. 
 
-Para isso, Frank Rosenblatt cunhou o termo "perceptron" em seu trabalho "Principles of Neurodynamics: Perceptrons and the Theory of Brain Mechanisms". Assim, iniciaremos nossa abordagem matemática das ANNs com o desenvolvimento de um objeto elementar dotado de percepção, ou seja, o perceptron. Após, iremos aprovisionar tal percetron de maior complexidade com o objetivo de capacita-lo em gerir e correlacionar mais informações, isto é, um multilayer percetron (MLP). Por último, dota-lo com a capacidade de julgamento através de sua percepção. 
+Para isso, Frank Rosenblatt cunhou o termo "perceptron" em seu trabalho "Principles of Neurodynamics: Perceptrons and the Theory of Brain Mechanisms". Assim, iniciaremos nossa abordagem matemática das ANNs com o desenvolvimento de um objeto elementar dotado de percepção, ou seja, o perceptron. Após, iremos aprovisionar tal percetron de maior complexidade com o objetivo de capacitá-lo em gerir e correlacionar mais informações, isto é, um multilayer percetron (MLP). Por último, dotá-lo com a capacidade de julgamento através de sua percepção. 
 
 
 
-\section{Task description and data construction}
-\label{sec:headings}
-We are provided with five datasets from Kaggle: Sales train, Sale test, items, item categories and shops. In the Sales train dataset, it provides the information about the sales’ number of an item in a shop within a day. In the Sales test dataset, it provides the shop id and item id which are the items and shops we need to predict. In the other three datasets, we can get the information about item’s name and its category, and the shops’ name.
-\paragraph{Task modeling.}
-We approach this task as a regression problem. For every item and shop pair, we need to predict its next month sales(a number).
-\paragraph{Construct train and test data.}
-In the Sales train dataset, it only provides the sale within one day, but we need to predict the sale of next month. So we sum the day's sale into month's sale group by item, shop, date(within a month).
-In the Sales train dataset, it only contains two columns(item id and shop id). Because we need to provide the sales of next month, we add a date column for it, which stand for the date information of next month.
+\section{Perceptron}
+Nosso objetivo é construir um perceptron que seja descrito por uma função \(f\) tal que \(f: \mathbb{R}^n \rightarrow \Theta\) onde \(\Theta\) representa qualquer contradomínío possível. Isso implica que, nessa função as variáveis independentes ou inputs representarão o estímulo do perceptron e a variável dependente ou output a resposta desse estímulo. 
+
+\subsection[]{Inputs}
+
+O input será denotado por um vetor \(X\) tal que \(X \in \mathbb{R}^n\). Logo, temos que \(X^T = [x_1, \dots, x_n]\) onde o superescrito \(T\) representa a forma transposta do vetor \(X\). Repare que no vetor não há o elemento \(x_0\). Isso se deve ao fato que iremos reservar tal termo para o que futuramente será introduzido como o bias. Logo, os inputs ou variáveis independentes serão listado de \(i=1, \dots, n\).
+
+\subsection[]{Outputs}
+
+O output será denotado por um vetor \(Y\) tal que \(Y \in \Theta\). Logo, temos que \(Y = [y_1]\). No output não haverá a adição do bias futuramente mas evitaremos utilizar o índice zero para evitar enganos futuros. O domínio \(\Theta\) representa qualquer domínimo possível tal que \(\Theta\) será ditado pela função de ativação que iremos introduzir em breve. No perceptron teremos o vetor \(Y\) com apenas uma dimensão. Futuramente iremos introduzir um vetor de saída com \(m\)-outputs. Logo, os outputs ou variáveis dependentes serão listado de \(i=1, \dots, m\).
+
+\subsection[]{Weights}
+Os pesos serão parte substancial de nosso perceptron. Tais pesos irão transformar nossos \(n\)-inputs a fim de resultar em elementos de \(Y\). Logo, os pesos serão denotados por \(\varpi\) tal que \(\varpi \in \mathbb{R}^n\). 
+
 
 \subsection{Headings: second level}
 \lipsum[5]
